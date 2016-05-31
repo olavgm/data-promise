@@ -1,9 +1,20 @@
 'use strict'
 
-function Data (connection, tableName, tableID) {
-	this.connection = connection
+var mysqlPromise = require('mysql-promise')
+var db = mysqlPromise()
+
+var connection = {
+  query: function (query, parameterValues) {
+    return db.query.apply(db, arguments).then(function (rowsAndInfo) {
+      return rowsAndInfo[0]
+    })
+  }
+}
+
+function Data (config, tableName, tableID) {
 	this.tableName = tableName
 	this.tableID = tableID
+	db.configure(config)
 }
 
 function give (value) {
@@ -14,7 +25,7 @@ function give (value) {
 
 module.exports = Data
 
-Data.prototype.Create = function (record) {
+Data.prototype.create = function (record) {
 	var sql = 'INSERT INTO ' + this.tableName + '('
 
 	var keys = []
@@ -39,7 +50,7 @@ Data.prototype.Create = function (record) {
 	}
 }
 
-Data.prototype.CreateMultiple = function (records) {
+Data.prototype.createMultiple = function (records) {
 	var keys = []
 	var valuesMatrix = []
 
@@ -86,7 +97,7 @@ Data.prototype.CreateMultiple = function (records) {
 	})
 }
 
-Data.prototype.Read = function (recordID) {
+Data.prototype.read = function (recordID) {
 	var sql = 'SELECT * FROM ' + this.tableName + ' WHERE ' + this.tableID + ' = ?'
 
 	return connection.query(sql, recordID).then(function (results) {
@@ -98,7 +109,7 @@ Data.prototype.Read = function (recordID) {
 	})
 }
 
-Data.prototype.Update = function (record) {
+Data.prototype.update = function (record) {
 	var sql = 'UPDATE ' + this.tableName + ' SET '
 
 	var parameters = []
@@ -116,7 +127,7 @@ Data.prototype.Update = function (record) {
 	return connection.query(sql, parameters)
 }
 
-Data.prototype.Delete = function (recordID) {
+Data.prototype.delete = function (recordID) {
 	var sql = 'DELETE FROM ' + this.tableName + ' WHERE ' + this.tableID + ' = ?'
 
 	return connection.query(sql, recordID).then(function (result) {
@@ -124,7 +135,7 @@ Data.prototype.Delete = function (recordID) {
 	})
 }
 
-Data.prototype.Exists = function (recordID) {
+Data.prototype.exists = function (recordID) {
 	var sql = 'SELECT COUNT(*) count FROM ' + this.tableName + ' WHERE ' + this.tableID + ' = ?'
 
 	return connection.query(sql, recordID).then(function (result) {
@@ -132,7 +143,7 @@ Data.prototype.Exists = function (recordID) {
 	})
 }
 
-Data.prototype.ListAll = function () {
+Data.prototype.listAll = function () {
 	var sql = 'SELECT * FROM ' + this.tableName
 
 	return connection.query(sql)
