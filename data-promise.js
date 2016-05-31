@@ -4,16 +4,17 @@ var mysqlPromise = require('mysql-promise')
 var db = mysqlPromise()
 
 var connection = {
-  query: function (query, parameterValues) {
-    return db.query.apply(db, arguments).then(function (rowsAndInfo) {
-      return rowsAndInfo[0]
-    })
-  }
+	query: function (query, parameterValues) {
+		return db.query.apply(db, arguments).then(function (rowsAndInfo) {
+			return rowsAndInfo[0]
+		})
+	}
 }
 
 function Data (config, tableName, tableID) {
 	this.tableName = tableName
 	this.tableID = tableID
+	this.query = connection.query
 	db.configure(config)
 }
 
