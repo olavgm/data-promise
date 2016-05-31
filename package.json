@@ -1,0 +1,22 @@
+{
+  "name": "data-promise",
+  "version": "1.0.1",
+  "description": "Data access layer for MySQL using promises",
+  "main": "data-promise.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olavgm/data-promise.git"
+  },
+  "author": "Olav Gausaker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olavgm/data-promise/issues"
+  },
+  "homepage": "https://github.com/olavgm/data-promise#readme",
+  "dependencies": {
+    "mysql-promise": "^3.0.0"
+  }
+}
