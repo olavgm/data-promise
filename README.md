@@ -1,6 +1,4 @@
 # data-promise
-Data access layer for MySQL using promises
-
 **data-promise** is CRUD layer for MySQL. It uses promises to return the results or errors.
 
 ## Installation
@@ -33,7 +31,7 @@ var userData = new data(mysql, 'users', 'userId')
 
 
 // Let's create a new record on the users table!
-// Create the object that we will insert in the database
+// Create the object that we will insert in the database (the table contains a field "name")
 var user = {
 	name: 'Lucía'
 }
@@ -59,7 +57,7 @@ userData.listAll().then((results) => {
 })
 
 
-// Let's read one record on the list, filtering by Id (assume userId is 1077)
+// Let's read one record on the list, filtering by Id (assume the userId is 1077)
 userData.read(1077).then((results) => {
 	console.log(results)
 })
@@ -69,4 +67,11 @@ userData.read(1077).then((results) => {
 })
 ```
 
-
+## Available methods
+- create
+- createMultiple (pass an array of elements to create all at once)
+- read
+- update
+- delete
+- exists (returns `true` if there is a row with the specified Id)
+- listAll
