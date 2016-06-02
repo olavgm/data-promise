@@ -39,7 +39,7 @@ var user = {
 // Just call the method .create on the data object
 userData.create(user).then((userId) => {
 	// user created
-	console.log(result)
+	console.log(userId)
 })
 .catch((error) => {
 	// error creating user
