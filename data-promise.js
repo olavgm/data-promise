@@ -123,7 +123,9 @@ Data.prototype.update = function (record) {
 		}
 	}
 
-	sql += queryItems.join() + ' WHERE ' + this.tableID + ' = ' + record[this.tableID]
+	parameters.push(record[this.tableID])
+
+	sql += queryItems.join() + ' WHERE ' + this.tableID + ' = ?'
 
 	return connection.query(sql, parameters)
 }
